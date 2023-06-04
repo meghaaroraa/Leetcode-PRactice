@@ -1,0 +1,37 @@
+https://leetcode.com/problems/two-sum/description/
+
+APPROACH 1 - BRUTE FORCE
+TIME COMPLEXITY = O(N^2)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        int n = nums.size();
+        for(int i=0; i<n; i++){
+            for(int j=i+1; j<n; j++){
+                if(nums[i] + nums[j] == target) return {i,j};
+            }
+        }
+        return {};
+    }
+};
+
+APPROACH 2 - HASHMAP
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        unordered_map<int,int> mp;
+        int n = nums.size();
+
+        for(int i=0; i<n; i++){
+            int num = target - nums[i];
+            if(mp.find(num) != mp.end()) return {mp[num],i};
+            mp[nums[i]] = i;
+        }
+        return {};
+    }
+};
