@@ -1,0 +1,45 @@
+https://leetcode.com/problems/rotate-array/description/
+
+APPROACH 1 : USING LOOP
+TIME COMPLEXITY = O(N^2)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    void rotate(vector<int>& nums, int k) {
+        int n = nums.size();
+
+        while(k--){
+            int temp = nums[n-1];
+            for(int i=n-2; i>=0; i--){
+                nums[i+1] = nums[i];
+            }
+            nums[0] = temp;
+        }
+    }
+};
+
+APPROACH 2 : REVERSING ARRAY
+TIME COMPLEOXTY = O(N)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+
+    void rev(vector<int>& nums, int left, int right){
+        while(left < right){
+            swap(nums[left], nums[right]);
+            left++;
+            right--;
+        }
+    }
+
+    void rotate(vector<int>& nums, int k) {
+        int n = nums.size();
+        k %= n;
+
+        rev(nums,0,n-1);
+        rev(nums,0,k-1);
+        rev(nums,k,n-1);
+    }
+};
