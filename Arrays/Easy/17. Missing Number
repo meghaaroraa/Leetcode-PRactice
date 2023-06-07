@@ -1,0 +1,39 @@
+https://leetcode.com/problems/missing-number/
+
+APPROACH 1 : SORTING
+TIME COMPLEXITY = O(NLogN)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        int n = nums.size();
+
+        if(nums[0] != 0) return 0;
+
+        for(int i=0; i<n-1; i++){
+            if(nums[i] != nums[i+1] - 1) return nums[i]+1;
+        }
+        return nums[n-1] + 1;
+    }
+};
+
+APROACH 2 : ONE PASS
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int idx = 0;
+        int num = 0;
+
+        for(int i=0; i<nums.size(); i++){
+            idx += (i+1);
+            num += nums[i];
+        }
+
+        return idx - num;
+    }
+};
