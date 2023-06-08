@@ -1,0 +1,44 @@
+https://leetcode.com/problems/max-consecutive-ones/
+
+APPROACH 1 
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    int findMaxConsecutiveOnes(vector<int>& nums) {
+        int cnt = 0;
+        int ans = INT_MIN;
+
+        for(int i=0; i<nums.size(); i++){
+            if(nums[i] != 1){
+                ans = max(ans, cnt);
+                cnt = 0;
+            }
+            else cnt++;
+        }
+        if(cnt) return max(ans, cnt);
+        return ans;
+    }
+};
+
+APPROACH 2
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    int findMaxConsecutiveOnes(vector<int>& nums) {
+        int cnt = 0;
+        int ans = 0;
+
+        for(int i=0; i<nums.size(); i++){
+            if(nums[i] == 1){
+                cnt++;
+                ans = max(ans, cnt);
+            }
+            else cnt = 0;
+        }
+        return ans;
+    }
+};
