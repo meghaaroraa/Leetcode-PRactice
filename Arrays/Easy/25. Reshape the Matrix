@@ -1,0 +1,53 @@
+https://leetcode.com/problems/reshape-the-matrix/
+
+APPROACH 1
+TIME COMPLEXITY = O(N^2)
+SPACE COMPLEIXTY = O(N^2)
+
+class Solution {
+public:
+    vector<vector<int>> matrixReshape(vector<vector<int>>& mat, int r, int c) {
+        int n = mat.size();
+        int m = mat[0].size();
+        vector<int> arr;
+
+        if(n*m != r*c) return mat;
+
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++) arr.push_back(mat[i][j]);
+        }
+
+        vector<vector<int>> ans(r, vector<int>(c));
+        int idx = 0;
+
+        for(int i=0; i<r; i++){
+            for(int j=0; j<c; j++) ans[i][j] = arr[idx++];
+        }
+        return ans;
+    }
+};
+
+APPROACH 2
+TIME COMPLEXITY = O(N^2)
+SPACE COMPLEXITY = O(N^2)
+
+class Solution {
+public:
+    vector<vector<int>> matrixReshape(vector<vector<int>>& mat, int r, int c) {
+        int n = mat.size();
+        int m = mat[0].size();
+
+        if(n*m != r*c) return mat;
+
+        vector<vector<int>> ans(r, vector<int> (c));
+        int idx = 0;
+
+        for(int i=0; i<r; i++){
+            for(int j=0; j<c; j++){
+                ans[i][j] = mat[idx/m][idx%m];
+                idx++;
+            }
+        }
+        return ans;
+    }
+};
