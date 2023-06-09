@@ -1,0 +1,22 @@
+https://leetcode.com/problems/k-diff-pairs-in-an-array/description/
+
+APPROACH : HASMAP
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+    int findPairs(vector<int>& nums, int k) {
+        unordered_map<int,int> mp;
+        for(int i=0; i<nums.size(); i++) mp[nums[i]]++;
+
+        int cnt = 0;
+        for(auto x : mp){
+            if(k == 0){
+                if(x.second > 1) cnt++;
+            }
+            else if(mp.count(x.first - k)) cnt++;
+        }
+        return cnt;
+    }
+};
