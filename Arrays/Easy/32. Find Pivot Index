@@ -1,0 +1,24 @@
+https://leetcode.com/problems/find-pivot-index/description/
+
+APPROACH : SLIDING WINDOW
+TIME COMPLEXITY = O(N)
+SPACE COMPELXITY = O(1)
+
+class Solution {
+public:
+    int pivotIndex(vector<int>& nums) {
+        int n = nums.size();
+        int leftSum = 0;
+        int rightSum = 0;
+
+        for(int i=1; i<n; i++) rightSum += nums[i];
+
+        for(int i=0; i<n-1; i++){
+            if(leftSum == rightSum) return i;
+            leftSum += nums[i];
+            rightSum -= nums[i+1];
+        }
+        if(leftSum == rightSum) return n-1;
+        else return -1;
+    }
+};
