@@ -1,0 +1,23 @@
+https://leetcode.com/problems/longest-continuous-increasing-subsequence/
+
+APPROACH : ONE PASS
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    int findLengthOfLCIS(vector<int>& nums) {
+        int cnt = 1;
+        int ans = 1;
+        int n = nums.size();
+
+        for(int i=1; i<n; i++){
+            if(nums[i] > nums[i-1]) cnt++;
+            else{
+                ans = max(ans, cnt);
+                cnt = 1;
+            }
+        }
+        return max(ans,cnt);
+    }
+};
