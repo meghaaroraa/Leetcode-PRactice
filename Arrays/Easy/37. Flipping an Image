@@ -1,0 +1,49 @@
+https://leetcode.com/problems/flipping-an-image/
+
+APPROACH 1 : 2 LOOPS
+TIME COMPLEXITY = O(N^2)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+
+    void reverse(vector<int>& arr, int st, int end){
+        while(st < end){
+            swap(arr[st],arr[end]);
+            st++;
+            end--;
+        }
+    }
+
+    void flip(vector<int>& arr, int n){
+        for(int i=0; i<n; i++) arr[i] = 1 - arr[i];
+    }
+
+    vector<vector<int>> flipAndInvertImage(vector<vector<int>>& image) {
+        int n = image.size();
+        int m = image.size();
+
+        for(int i=0; i<n; i++) reverse(image[i],0,m-1);
+        for(int i=0; i<n; i++) flip(image[i],m);
+
+        return image;
+    }
+};
+
+APPROACH 2 : STL
+TIME COMPLEXITY = O(N^2)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    vector<vector<int>> flipAndInvertImage(vector<vector<int>>& image) {
+        int n = image.size();
+        int m = image[0].size();
+
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++) image[i][j] = 1 - image[i][j];
+            reverse(image[i].begin(),image[i].end());
+        }
+        return image;
+    }
+};
