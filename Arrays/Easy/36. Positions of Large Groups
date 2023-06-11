@@ -1,0 +1,28 @@
+https://leetcode.com/problems/positions-of-large-groups/description/
+
+APPROACH : ONE PASS
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+    vector<vector<int>> largeGroupPositions(string s) {
+        int n = s.length();
+        int cnt = 1;
+        vector<vector<int>> ans;
+        int st = 0;
+        int en = 0;
+
+        for(int i=1; i<n; i++){
+            if(s[i] == s[i-1]) cnt++;
+            else{
+                en = i-1;
+                if(cnt >= 3)ans.push_back({st,en});
+                st = i;
+                cnt = 1;
+            }
+        }
+        if(cnt >= 3) ans.push_back({st,n-1});
+        return ans;
+    }
+};
