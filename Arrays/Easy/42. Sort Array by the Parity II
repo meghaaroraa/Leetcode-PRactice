@@ -1,0 +1,49 @@
+https://leetcode.com/problems/sort-array-by-parity-ii/
+
+APPROACH 1 : USING EXTRA SPACE
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+    vector<int> sortArrayByParityII(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> ans(n);
+
+        int oddIdx = 1;
+        int evenIdx = 0;
+
+        for(int i=0; i<n; i++){
+            if(nums[i]%2 == 0){
+                ans[evenIdx] = nums[i];
+                evenIdx += 2;
+            }
+            else{
+                ans[oddIdx] = nums[i];
+                oddIdx += 2;
+            }
+        }
+
+        return ans;
+    }
+};
+
+APPROACH 2 : ONE PASS
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    vector<int> sortArrayByParityII(vector<int>& nums) {
+        int n = nums.size();
+        int i = 0;
+        int j = 1;
+
+        while(i<n && j<n){
+            if(nums[i]%2 == 0) i+=2;
+            else if(nums[j]%2 != 0) j+=2;
+            else swap(nums[i],nums[j]);
+        }
+        return nums;
+    }
+};
