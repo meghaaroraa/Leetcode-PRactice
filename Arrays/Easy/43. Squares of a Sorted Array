@@ -1,0 +1,52 @@
+https://leetcode.com/problems/squares-of-a-sorted-array/
+
+APPROACH 1 : SORTING
+TIME COMPLEXITY = O(NLogN)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    vector<int> sortedSquares(vector<int>& nums) {
+        int n = nums.size();
+
+        for(int i=0; i<n; i++){
+            nums[i] = nums[i] * nums[i];
+        }
+
+        sort(nums.begin(),nums.end());
+        return nums;
+        
+    }
+};
+
+APPROACH 2 : BINARY SEARCH
+TIME COMPLEXITY = O(LogN)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+    vector<int> sortedSquares(vector<int>& nums) {
+        int n = nums.size();
+        int left = 0;
+        int right = n-1;
+        int idx = n-1;
+        vector<int> ans(n);
+
+        while(left <= right){
+            int i = nums[left] * nums[left];
+            int j = nums[right] * nums[right];
+
+            if(i > j){
+                ans[idx] = i;
+                left++;
+                idx--;
+            }
+            else{
+                ans[idx] = j;
+                right--;
+                idx--;
+            };
+        }
+        return ans;
+    }
+};
