@@ -1,0 +1,39 @@
+https://leetcode.com/problems/image-smoother/
+
+APPROACH 
+TIME COMPLEXITY = O(N^3)
+SPACE COMPLEXITY = O(N^2)
+
+class Solution {
+public:
+    vector<vector<int>> imageSmoother(vector<vector<int>>& img) {
+        vector<int> dr ={-1,0,1,0,1,1,-1,-1,0};
+        vector<int> dc = {0,1,0,-1,-1,1,1,-1,0};
+
+        int n = img.size();
+        int m = img[0].size();
+
+        vector<vector<int>> ans(n, vector<int>(m));
+
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                int sum = 0;
+                int cnt = 0;
+
+                for(int k=0; k<9; k++){
+                    int nrow = i + dr[k];
+                    int ncol = j + dc[k];
+
+                    if(nrow >= 0 && nrow < n && ncol >= 0 && ncol < m){
+                        sum += img[nrow][ncol];
+                        cnt++;
+                    }
+                }
+
+                int avg = sum / cnt;
+                ans[i][j] = avg;
+            }
+        }
+        return ans;
+    }
+};
