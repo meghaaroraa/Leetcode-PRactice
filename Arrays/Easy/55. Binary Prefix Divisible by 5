@@ -1,0 +1,21 @@
+https://leetcode.com/problems/binary-prefix-divisible-by-5/
+
+APPROACH : ONE PASS
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    vector<bool> prefixesDivBy5(vector<int>& nums) {
+        long long int binNum = 0;
+        int n = nums.size();
+        vector<bool> ans;
+
+        for(int i=0; i<n; i++){
+            binNum = (binNum*2 + nums[i]) % 5;
+            if(binNum == 0) ans.push_back(true);
+            else ans.push_back(false);
+        }
+        return ans;
+    }
+};
