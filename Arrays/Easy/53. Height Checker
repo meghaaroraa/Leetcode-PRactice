@@ -1,0 +1,21 @@
+https://leetcode.com/problems/height-checker/
+
+APPROACH : SORTING
+TIME COMPLEXITY = O(NLogN)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+    int heightChecker(vector<int>& heights) {
+        vector<int> ex = heights;
+        sort(ex.begin(), ex.end());
+
+        int n = heights.size();
+        int cnt = 0;
+
+        for(int i=0; i<n; i++){
+            if(heights[i] != ex[i]) cnt++;
+        }
+        return cnt;
+    }
+};
