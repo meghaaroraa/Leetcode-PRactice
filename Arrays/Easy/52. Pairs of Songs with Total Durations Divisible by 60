@@ -1,0 +1,42 @@
+https://leetcode.com/problems/pairs-of-songs-with-total-durations-divisible-by-60/
+
+APPROACH : 2 LOOPS
+TIME COMPLEXITY = O(N^2)
+SPACE COMPLEXITY = O(1)
+* GIVES TLE *
+
+class Solution {
+public:
+    int numPairsDivisibleBy60(vector<int>& time) {
+        int n = time.size();
+        int cnt = 0;
+
+        for(int i=0; i<n; i++){
+            for(int j=i+1; j<n; j++){
+                if((time[i] + time[j]) % 60 == 0) cnt++;
+            }
+        }
+        return cnt;
+    }
+};
+
+APPROACH 2 : USING EXTRA SPACE
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+    int numPairsDivisibleBy60(vector<int>& time) {
+        vector<int> rem(60);
+        int n = time.size();
+        int cnt = 0;
+
+        for(int i=0; i<n; i++){
+            int t = time[i] % 60;
+            if(t == 0) cnt += rem[0];
+            else cnt += rem[60 - t];
+            rem[t]++;
+        }
+        return cnt;
+    }
+};
