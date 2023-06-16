@@ -1,0 +1,29 @@
+https://leetcode.com/problems/cells-with-odd-values-in-a-matrix/
+
+APPROACH : BRUTE FORCE
+TIME COMPLEXITY = O(N^3)
+SPACE COMPLEXITY = O(N^2)
+
+class Solution {
+public:
+    int oddCells(int m, int n, vector<vector<int>>& indices) {
+        vector<vector<int>> vec(m, vector<int> (n,0));
+        int sz = indices.size();
+
+        for(int i=0; i<sz; i++){
+            int row = indices[i][0];
+            int col = indices[i][1];
+
+            for(int i=0; i<n; i++) vec[row][i]++;
+            for(int i=0; i<m; i++) vec[i][col]++;
+        }
+
+        int cnt = 0;
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++){
+                if(vec[i][j] % 2 != 0) cnt++;
+            }
+        }
+        return cnt;
+    }
+};
