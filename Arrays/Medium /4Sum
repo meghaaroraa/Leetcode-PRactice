@@ -1,0 +1,39 @@
+https://leetcode.com/problems/4sum/
+
+APPROACH : POINTERS
+TIME COMPLEIXTY = O(N^3)
+SPACE COMPLEXITY = O(N^2)
+
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        sort(nums.begin(),nums.end());
+        int n = nums.size();
+        vector<vector<int>> ans;
+
+        for(int i=0; i<n; i++){
+            long long int tar1 = target - nums[i];
+            for(int j=i+1; j<n; j++){
+                int st = j+1;
+                int end = n-1;
+                long long int tar2 = tar1 - nums[j];
+
+                while(st < end){
+                    if(nums[st] + nums[end] == tar2){
+                        ans.push_back({nums[i],nums[j],nums[st],nums[end]});
+                        while(st<end && nums[st] == nums[st+1]) st++;
+                        while(st<end && nums[end] == nums[end-1]) end--;
+                        st++;
+                        end--;
+                    }
+
+                    else if(nums[st] + nums[end] < tar2) st++;
+                    else end--;
+                }
+                while(j<n-1 && nums[j]==nums[j+1]) j++;
+            }
+            while(i<n-1 && nums[i]==nums[i+1]) i++;
+        }
+        return ans;
+    }
+};
