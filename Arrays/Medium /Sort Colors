@@ -1,0 +1,27 @@
+https://leetcode.com/problems/sort-colors/
+
+APPROACH : COUNT SORT
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        int red = 0;
+        int white = 0;
+        int blue = 0;
+        
+        for(int x : nums){
+            if(x==0) red++;
+            else if(x==1) white++;
+            else blue++;
+        }
+
+        vector<int> ans;
+        while(red--) ans.push_back(0);
+        while(white--) ans.push_back(1);
+        while(blue--) ans.push_back(2);
+
+        nums = ans;
+    }
+};
