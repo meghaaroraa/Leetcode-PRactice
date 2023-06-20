@@ -1,0 +1,28 @@
+https://leetcode.com/problems/set-matrix-zeroes/
+
+APPROACH : USING EXTRA SPACE
+TIME COMPLEXITY = O(N^2)
+SPACE COMPLEXITY = O(N^2)
+
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+        int n = matrix.size();
+        int m = matrix[0].size();
+
+        vector<vector<int>> ans = matrix;
+
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(matrix[i][j] == 0){
+                    int row = i;
+                    int col = j;
+
+                    for(int x=0; x<m; x++) ans[row][x] = 0;
+                    for(int x=0; x<n; x++) ans[x][col] = 0;
+                }
+            }
+        }
+        matrix = ans;
+    }
+};
