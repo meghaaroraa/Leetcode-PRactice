@@ -1,0 +1,76 @@
+https://leetcode.com/problems/maximum-product-subarray/
+
+APPRAOCH 1 : 2 LOOPS
+TIME COMPLEXITY = O(N^2)
+SPACE COMPLEXITY = O(1)
+* GIVES TLE *
+
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        int n = nums.size();
+        int ans = nums[0];
+
+        for(int i=0; i<n; i++){
+            int mul = nums[i];
+            for(int j=i+1; j<n; j++){
+                ans = max(ans,mul);
+                mul *= nums[j];
+            }
+            ans = max(ans,mul);
+        }
+        return ans;
+    }
+};
+
+APPROACH 2 : KADANE'S ALGORITHM
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        int n = nums.size();
+        int ans = INT_MIN;
+        int mul = 1;
+
+        for(int i=0; i<n; i++){
+            mul *= nums[i];
+            ans = max(ans, mul);
+
+            if(mul == 0) mul = 1;
+        }
+
+        mul = 1;
+        for(int i=n-1; i>=0; i--){
+            mul *= nums[i];
+            ans = max(ans, mul);
+
+            if(mul == 0) mul = 1;
+        }
+
+        return ans;
+    }
+};
+
+APPROACH 3 : ONE PASS
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        int maximum = nums[0];
+        int minimum = nums[0];
+        int ans = nums[0];
+
+        for(int i=1; i<nums.size();i++){
+            if(nums[i]<0) swap(maximum,minimum);
+            
+            maximum = max(maximum*nums[i],nums[i]);
+            minimum = min(minimum*nums[i],nums[i]);
+            if(maximum > ans) ans=maximum;
+        }
+        return ans;
+    }
+};
