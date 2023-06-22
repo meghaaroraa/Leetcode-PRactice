@@ -1,0 +1,31 @@
+https://leetcode.com/problems/combination-sum-iii/
+
+APPROACH : BACKTRACKING
+TIME COMPLEXITY : O(9^K)
+SPACE COMPLEXITY = O(N^2)
+
+class Solution {
+public:
+
+    void helper(int idx, int k, int n, vector<int>& temp, vector<vector<int>>& ans){
+        if(!k || !n){
+            if(!k && !n) ans.push_back(temp);
+            return;
+        }
+
+        for(int i=idx; i<=9; i++){
+            if(n < i) return;
+
+            temp.push_back(i);
+            helper(i+1, k-1, n-i, temp, ans);
+            temp.pop_back();
+        }
+    }
+
+    vector<vector<int>> combinationSum3(int k, int n) {
+        vector<int> temp;
+        vector<vector<int>> ans;
+        helper(1,k,n,temp,ans);
+        return ans;
+    }
+};
