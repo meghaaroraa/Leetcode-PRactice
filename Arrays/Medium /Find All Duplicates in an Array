@@ -1,0 +1,44 @@
+https://leetcode.com/problems/find-all-duplicates-in-an-array/
+
+APPROACH 1 : HASHMAP
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+    vector<int> findDuplicates(vector<int>& nums) {
+        unordered_map<int,int> mp;
+        int n = nums.size();
+        vector<int> ans;
+
+        for(int i=0; i<n; i++) mp[nums[i]]++;
+
+        for(auto i : mp){
+            if(i.second > 1) ans.push_back(i.first);
+        }
+        return ans;
+    }
+};
+
+APPROACH 2 : ONE PASS
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    vector<int> findDuplicates(vector<int>& nums) {
+        int n = nums.size();
+        if(n==0) return {};
+
+        vector<int> ans;
+        sort(nums.begin(),nums.end());
+
+        for(int i=0; i<n-1; i++){
+            if(nums[i] == nums[i+1]){
+                ans.push_back(nums[i]);
+                //while(nums[i] == nums[i+1] && i<n) i++;
+            }
+        }
+        return ans;
+    }
+};
