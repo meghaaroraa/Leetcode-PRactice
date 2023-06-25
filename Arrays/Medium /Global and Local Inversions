@@ -1,0 +1,42 @@
+https://leetcode.com/problems/global-and-local-inversions/
+
+APPROACH 1 : 2 LOOPS
+TIME COMPLEXITY = O(N^2)
+SPACE COMPLEXITY = O(N)
+* GIVES TLE *
+
+class Solution {
+public:
+    bool isIdealPermutation(vector<int>& nums) {
+        int n = nums.size();
+        int gi = 0;
+        int li = 0;
+
+        for(int i=0; i<n; i++){
+            if(i<n-1 && nums[i] > nums[i+1]) li++;
+
+            for(int j=i+1; j<n; j++){
+                if(nums[i] > nums[j]) gi++;
+            }
+        }
+        return li==gi;
+    }
+};
+
+APPROACH 2 : ONE PASS
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    bool isIdealPermutation(vector<int>& nums) {
+        int n = nums.size();
+        int maxNum = 0;
+
+        for(int i=0; i<n-2; i++){
+            maxNum = max(maxNum, nums[i]);
+            if(maxNum > nums[i+2]) return false;
+        }
+        return true;
+    }
+};
