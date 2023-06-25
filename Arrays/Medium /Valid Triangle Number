@@ -1,0 +1,76 @@
+https://leetcode.com/problems/valid-triangle-number/
+
+APPROACH 1 : BRUTE FORCE
+TIME COMPLEXITY = O(N^3)
+SPACE COMPLEXITY = O(1)
+* GIVES TLE * 
+
+class Solution {
+public:
+    int triangleNumber(vector<int>& nums) {
+        int n = nums.size();
+        int ans = 0;
+
+        for(int i=0; i<n; i++){
+            for(int j=i+1; j<n; j++){
+                for(int k=j+1; k<n; k++){
+                    if(nums[i] + nums[j] > nums[k] &&
+                        nums[i] + nums[k] > nums[j] &&
+                        nums[j] + nums[k] > nums[i]) ans++;
+                }
+            }
+        }
+        return ans;
+    }
+};
+
+APPROACH 2 : LINEAR SCAN
+TIME COMPLEXITY = O(N^2 * NLogN) = O(N^2)
+SPACE COMPLEXITY = O(LogN)
+
+class Solution {
+public:
+    int triangleNumber(vector<int>& nums) {
+        int n = nums.size();
+        int ans = 0;
+        sort(nums.begin(),nums.end());
+
+        for(int i=0; i<n; i++){
+            int k = i+2;
+            for(int j=i+1; j<n-1 && nums[i]!=0; j++){
+                while(k<n && nums[i]+nums[j] > nums[k]) k++;
+                ans += k-j-1;
+            }
+        }
+        return ans;
+    }
+};
+
+APPROACH 3 : BINARY SEARCH
+TIME COMPLEXITY = O(N^2 * LogN)
+SPACE COMPLEXITY = O(LogN)
+
+class Solution {
+public:
+    int triangleNumber(vector<int>& nums) {
+        int cnt = 0;
+        int n = nums.size();
+        sort(nums.begin(),nums.end());
+
+        for(int i=n-1; i>=0; i--){
+            int st = 0;
+            int en = i-1;
+
+            while(st<en){       
+                if(nums[i] < nums[st] + nums[en]){
+                    cnt += en-st;
+                    en--;
+                }
+                else{
+                    st++;
+                }
+            }
+        }
+        return cnt;
+    }
+};
