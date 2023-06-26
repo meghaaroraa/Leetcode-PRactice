@@ -1,0 +1,54 @@
+https://leetcode.com/problems/friends-of-appropriate-ages/
+
+APPROACH 1 : BRUTE FORCE
+TIME COMPLEXITY = O(N^2)
+SPACE COMPLEXITY = O(1)
+* GIVES TLE *
+
+class Solution {
+public:
+    int numFriendRequests(vector<int>& ages) {
+        //sort(ages.begin(),ages.end());
+        int n = ages.size();
+        int cnt = 0;
+
+        for(int i=0; i<n; i++){
+            for(int j=0; j<n; j++){
+                if(i == j) continue;
+                else if(ages[j] <= 0.5*ages[i] + 7) continue;
+                else if(ages[j] > ages[i]) continue;
+                else if(ages[j] > 100 && ages[i] < 100) continue;
+                else cnt++;
+            }
+        }
+        return cnt;
+    }
+};
+
+APPROACH 2 : UNORDERED MAP
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+
+    bool helper(int a, int b){
+        return !(b <= 0.5 * a + 7 || b > a || (b > 100 && a < 100));
+    }
+
+    int numFriendRequests(vector<int>& ages) {
+        unordered_map<int,int> mp;
+        int n = ages.size();
+
+        for(int i=0; i<n; i++) mp[ages[i]]++;
+        int cnt = 0;
+
+        for(auto a : mp){
+            for(auto b : mp){
+                if(helper(a.first,b.first)) 
+                    cnt += a.second * (b.second - (a.first == b.first ? 1 : 0));
+            }
+        }
+        return cnt;
+    }
+};
