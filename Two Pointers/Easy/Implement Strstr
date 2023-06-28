@@ -1,0 +1,28 @@
+https://leetcode.com/problems/implement-strstr/
+
+APPROACH : STRING MATCHING
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+
+    bool helper(string haystack, string needle, int i){
+        for(int j=0; j<needle.length(); j++){
+            if(haystack[i+j] != needle[j]) return false;
+        }
+        return true;
+    }
+
+    int strStr(string haystack, string needle) {
+        int n = haystack.length();
+        int m = needle.length();
+
+        for(int i=0; i<n-m+1; i++){
+            if(haystack[i] == needle[0]){
+                if(helper(haystack,needle,i)) return i;
+            }
+        }
+        return -1;
+    }
+};
