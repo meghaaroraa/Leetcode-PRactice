@@ -1,0 +1,26 @@
+https://leetcode.com/problems/long-pressed-name/
+
+APPROACH : STRING MATCHING
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    bool isLongPressedName(string name, string typed) {
+        int n = name.length();
+        int m = typed.length();
+
+        int i = 0;
+        int j = 0;
+
+        while(i<m){
+            if(j<n && typed[i] == name[j]){
+                i++;
+                j++;
+            }
+            else if(j>0 && typed[i] == name[j-1]) i++;
+            else return false;
+        }
+        return j==n;
+    }
+};
