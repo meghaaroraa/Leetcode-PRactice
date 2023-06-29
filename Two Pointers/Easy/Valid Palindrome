@@ -1,0 +1,62 @@
+https://leetcode.com/problems/valid-palindrome/
+
+APPROACH 1 : MAKING FUNCTIONS
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+
+    char lower(char ch){
+        if(ch >= 'a' && ch <= 'z') return ch;
+        else if(ch >= 'A' && ch <= 'Z') return ch - 'A' + 'a';
+        else if(ch >= '0' && ch <= '9') return ch;
+        else return '\0';
+    }
+
+    bool nonAlpha(char ch){
+        if(ch >= 'a' && ch <= 'z') return false;
+        else if(ch >= 'A' && ch <= 'Z') return false;
+        else if(ch >= '0' && ch <= '9') return false;
+        else return true;
+    }
+
+    bool isPalindrome(string s) {
+        int st = 0;
+        int end = s.length();
+
+        while(st < end){
+            if(lower(s[st]) != lower(s[end])){
+                if(nonAlpha(s[st])) st++;
+                else if(nonAlpha(s[end])) end--;
+                else return false;
+            }
+            else{
+                st++;
+                end--;
+            }
+        }
+        return true;
+    }
+};
+
+APPROACH 2 : USING STL
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+ public:
+  bool isPalindrome(string s) {
+    int l = 0;
+    int r = s.length() - 1;
+
+    while (l < r) {
+      while (l < r && !isalnum(s[l])) l++;
+      while (l < r && !isalnum(s[r])) r--;
+      if(tolower(s[l]) != tolower(s[r])) return false;
+      l++;
+      r--;
+    }
+    return true;
+  }
+};
