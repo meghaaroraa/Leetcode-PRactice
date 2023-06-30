@@ -1,0 +1,82 @@
+https://leetcode.com/problems/fruit-into-baskets/
+
+APPROACH 1 : BRUTE FORCE
+TIME COMPLEXITY = O(N^3)
+SPACE COMPLEXITY = O(N)
+* GIVES TLE *
+
+class Solution {
+public:
+    int totalFruit(vector<int>& fruits) {
+        int maxPicked = 0;
+        int n = fruits.size();
+
+        for(int left=0; left<n; left++){
+            for(int right=0; right<n; right++){
+                set<int> s;
+
+                for(int i=left; i<=right; i++) s.insert(fruits[i]);
+
+                if(s.size() <= 2){
+                    maxPicked = max(maxPicked,right-left+1);
+                }
+            }
+        }
+        return maxPicked;
+    }
+};
+
+APPROACH 2 : 
+TIME COMPLEXITY = O(N^2)
+SPACE COMPLEXITY = O(N)
+* IGVES TLE *
+
+class Solution {
+public:
+    int totalFruit(vector<int>& fruits) {
+        int maxPicked = 0;
+        int n = fruits.size();
+
+        for(int left=0; left<n; left++){
+            set<int> s;
+            int right = left;
+
+            while(right < n){
+                if(s.find(fruits[right])==s.end() && s.size()==2) break;
+                s.insert(fruits[right]);
+                right++;
+            }
+
+            maxPicked = max(maxPicked,right-left);
+        }
+        return maxPicked;
+    }
+};
+
+APPROACH 3 : SLIDING WINDOW
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+    int totalFruit(vector<int>& fruits) {
+        int maxPicked = 0;
+        int left = 0;
+        int n = fruits.size();
+        unordered_map<int,int> mp;
+
+        for(int right=0; right<n; right++){
+            if(mp.count(fruits[right]) == 0 && mp.size() == 2){
+                while(mp.size() != 1){
+                    mp[fruits[left]]--;
+                    if(mp[fruits[left]] == 0) mp.erase(fruits[left]);
+                    left++;
+                }
+            }
+
+            mp[fruits[right]]++;
+            maxPicked = max(maxPicked,right - left + 1);
+        }
+        return maxPicked;
+    }
+};
