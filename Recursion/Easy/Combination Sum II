@@ -1,0 +1,35 @@
+https://leetcode.com/problems/combination-sum-ii/
+
+APPROACH : SORTING + BACKTRACKING
+TIME COMPLEXITY = O(NLogN + 2^N)
+SPACE COMPLEXITY = O(N^2)
+
+class Solution {
+public:
+
+    void helper(int i, int target, vector<int>& candidates, vector<int>& temp, vector<vector<int>>& ans){
+        if(target == 0){
+            ans.push_back(temp);
+            return;
+        }
+
+        if(i == candidates.size() || target < 0) return;
+
+        temp.push_back(candidates[i]);
+        helper(i+1,target-candidates[i],candidates,temp,ans);
+        temp.pop_back();
+
+        while(i<candidates.size()-1 && candidates[i] == candidates[i+1]) i++;
+        helper(i+1,target,candidates,temp,ans);
+    }
+
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        vector<vector<int>> ans;
+        vector<int> temp;
+        sort(candidates.begin(),candidates.end());
+
+        if(target == 0) return ans;
+        helper(0,target,candidates,temp,ans);
+        return ans;
+    }
+};
