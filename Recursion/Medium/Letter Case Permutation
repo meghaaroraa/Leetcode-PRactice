@@ -1,0 +1,42 @@
+https://leetcode.com/problems/letter-case-permutation/
+
+APPROACH : 
+TIME COMPLEXITY = O(2^N)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+
+    void helper(int i, string temp, string s, vector<string>& ans){
+        if(i == s.length()){
+            ans.push_back(temp);
+            return;
+        }
+
+        if(s[i] >= 'a' && s[i] <= 'z'){
+            string t = temp + s[i];
+            helper(i+1, t, s, ans);
+
+            char keep = toupper(s[i]);
+            t = temp + keep;
+            helper(i+1, t, s, ans);
+        }
+
+        else{
+            string t = temp + s[i];
+            helper(i+1, t, s, ans);
+        }
+    }
+
+    vector<string> letterCasePermutation(string s) {
+        vector<string> ans;
+        string temp = "";
+        int i = 0;
+
+        int n = s.length();
+        for(int i=0; i<n; i++) s[i] = tolower(s[i]);
+
+        helper(i, temp, s, ans);
+        return ans;
+    }
+};
