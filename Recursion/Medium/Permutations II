@@ -1,0 +1,37 @@
+https://leetcode.com/problems/permutations-ii/
+
+APPROACH : SWAPPING AND SORTING
+TIME COMPLEXITY = O(N!)
+SPACE COMPLEXITY = O(N!)
+
+class Solution {
+public:
+
+    void helper(vector<vector<int>>& ans, vector<int>& nums, int i, int n){
+        if(i == n){
+            ans.push_back(nums);
+            return;
+        }
+
+        unordered_set<int> visited;
+
+        for(int j=i; j<n; j++){
+            if (visited.count(nums[j])) continue;
+            visited.insert(nums[j]);
+
+            swap(nums[i],nums[j]);
+            helper(ans, nums, i+1, n);
+            swap(nums[i],nums[j]);
+        }
+    }
+
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        vector<vector<int>> ans;
+        int n = nums.size();
+
+        sort(nums.begin(),nums.end());
+
+        helper(ans, nums, 0, n);
+        return ans;
+    }
+};
