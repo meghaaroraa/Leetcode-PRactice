@@ -1,0 +1,60 @@
+https://leetcode.com/problems/permutations/
+
+APPROACH : BACKTRACKING
+TIME COMPLEXITY = O(N * N!)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+
+    void helper(vector<int>& nums, vector<vector<int>>& ans, vector<int>& temp){
+        if(temp.size() == nums.size()){
+            ans.push_back(temp);
+            return;
+        }
+
+        for(int i=0; i<nums.size(); i++){
+            if(find(temp.begin(), temp.end(), nums[i]) == temp.end()){
+                temp.push_back(nums[i]);
+                helper(nums, ans, temp);
+                temp.pop_back();
+            }
+        }
+    }
+
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> ans;
+        vector<int> temp;
+        helper(nums, ans, temp);
+        return ans;
+    }
+};
+
+APPRACH 2 : SWAPPING
+TIME COMPLEXITY = O(N!)
+SPACE COMPLEXITY = O(N!)
+
+class Solution {
+public:
+    void helper(vector<int>& nums, int i, int n, vector<vector<int>>& ans){
+        if(i == n){
+            ans.push_back(nums);
+            return;
+        }
+
+        for(int j=i; j<n; j++){
+            swap(nums[i],nums[j]);
+            helper(nums,i+1,n,ans);
+            swap(nums[i],nums[j]);
+        }
+    }
+   
+    vector<vector<int>> permute(vector<int>& nums) {
+        int n = nums.size();
+        vector<vector<int>> ans;
+
+        helper(nums, 0, n, ans);
+        return ans;
+
+    }
+};
