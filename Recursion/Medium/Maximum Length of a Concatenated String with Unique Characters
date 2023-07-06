@@ -1,0 +1,40 @@
+https://leetcode.com/problems/maximum-length-of-a-concatenated-string-with-unique-characters/
+
+APPROACH : RECURSION
+TIME COMPLEXITY = O(2^N)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+    bool safe(string curr, string temp){
+        unordered_set<char> mp;
+
+        for(auto ch : curr){
+            if(mp.find(ch) != mp.end()) return false;
+            mp.insert(ch);
+        }
+
+        for(auto ch : temp){
+            if(mp.find(ch) != mp.end()) return false;
+            mp.insert(ch);
+        }
+        return true;
+    }
+
+    int helper(int i, vector<string>& arr, string temp){
+        if(i == arr.size()) return temp.size();
+
+        if(safe(arr[i], temp)){
+            int s1 = helper(i+1, arr, temp);
+            temp += arr[i];
+            int s2 = helper(i+1, arr, temp);
+            return max(s1, s2);
+        }
+        return helper(i+1, arr, temp);
+    }
+
+    int maxLength(vector<string>& arr) {
+        string temp = "";
+        return helper(0, arr, temp);
+    }
+};
