@@ -1,0 +1,44 @@
+https://leetcode.com/problems/path-with-maximum-gold/
+
+APPROACH : DEPTH FIRST SEARCH
+TIME COMPLEXITY = O(N*M)
+SPACE COMPLEXITY = O(N*M)
+
+class Solution {
+public:
+    int ans = INT_MIN;
+
+    void helper(vector<vector<int>>& grid, int i, int j, int temp, vector<vector<bool>>& visited){
+        int n = grid.size();
+        int m = grid[0].size();
+
+        if(i<0 || i>=n || j<0 || j>=m || visited[i][j] || grid[i][j] == 0){
+            ans = max(ans, temp);
+            return;
+        }
+
+        int gold = grid[i][j];
+        visited[i][j] = true;
+
+        helper(grid, i+1, j, temp + gold, visited);
+        helper(grid, i-1, j, temp + gold, visited);
+        helper(grid, i, j+1, temp + gold, visited);
+        helper(grid, i, j-1, temp + gold, visited);
+
+        visited[i][j] = false;
+    }
+
+    int getMaximumGold(vector<vector<int>>& grid) {
+        int n = grid.size();
+        int m = grid[0].size();
+
+        vector<vector<bool>> visited(n, vector<bool> (m, false));
+
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                helper(grid, i, j, 0, visited);
+            }
+        }
+        return ans;
+    }
+};
