@@ -1,0 +1,35 @@
+https://leetcode.com/problems/additive-number/
+
+APPROACH : BACKTRACKING
+TIME COMPLEXITY = O(2^N)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+    bool helper(string& num, int i, vector<long long int>& ans){
+        if(i == num.size()){
+            if(ans.size() >= 3) return true;
+            return false;
+        }
+
+        long long int n = 0;
+        for(int j=i; j<num.size(); j++){
+            if(j-i > 16) return false;
+            n = (10 * n) + num[j] - '0';
+
+            if(ans.size() <= 1 || ans[ans.size()-1] + ans[ans.size()-2] == n){
+                ans.push_back(n);
+                if(helper(num, j+1, ans)) return true;
+                ans.pop_back();
+            }
+
+            if(num[i] == '0') break;
+        }
+        return false;
+    }
+
+    bool isAdditiveNumber(string num) {
+        vector<long long int> ans;
+        return helper(num, 0, ans);
+    }
+};
