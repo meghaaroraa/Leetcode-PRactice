@@ -1,0 +1,52 @@
+https://leetcode.com/problems/sudoku-solver/
+
+APPROACH : BACKTRACKING
+TIME COMPLEXITY = O(9^(N^2))
+SPACE COMPLEXITY = O(N^2)
+
+class Solution {
+public:
+    bool isValid(vector<vector<char>>& board, int row, int col, int num, int n){
+        char target = num + '0';
+        
+        for(int i=0; i<n; i++){
+            if(board[i][col] == target) return false;
+        }
+
+        for(int i=0; i<n; i++){
+            if(board[row][i] == target) return false;
+        }
+
+        n = sqrt(n);
+        int si = (row/n) * n;
+        int sj = (col/n) * n;
+
+        for(int i=si; i<si+n; i++){
+            for(int j=sj; j<sj+n; j++){
+                if(board[i][j] == target) return false;
+            }
+        }
+        return true;
+    }
+
+    bool helper(vector<vector<char>>& board, int row, int col, int n){
+        if(row == n) return true;
+
+        if(col == n) return helper(board, row+1, 0, n);
+
+        if(board[row][col] != '.') return helper(board, row, col+1, n);
+
+        for(int num=1; num<=n; num++){
+            if(isValid(board, row, col, num, n)){
+                board[row][col] = num + '0';
+                if(helper(board, row, col+1, n)) return true;
+                board[row][col] = '.';
+            }
+        }
+        return false;
+    }
+
+    void solveSudoku(vector<vector<char>>& board) {
+        helper(board, 0, 0, 9);
+    }
+};
