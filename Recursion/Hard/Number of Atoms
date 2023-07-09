@@ -1,0 +1,70 @@
+https://leetcode.com/problems/number-of-atoms/
+
+APPROACH : ITERATIVE SOLUTION USING STACK
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+	string countOfAtoms(string formula) {
+		stack<map<string,int>> st;
+		map<string,int> cur;
+
+		for(int i=0;i<formula.size();i++){
+			if(formula[i] == '('){
+				st.push(cur);
+				cur.clear();
+			}
+
+			else if(formula[i] == ')'){
+				map<string,int> cur2 = cur;
+				int temp = i+1;
+				while(temp<formula.size() && isdigit(formula[temp])) temp++;
+				
+				int num;
+				if(temp == i+1) num=1;
+				
+				else{
+					string str = formula.substr(i+1,temp-1-i);
+					num = stoi(str);
+				}
+
+				cur = st.top();
+				st.pop();
+
+				for(auto& x : cur2) cur[x.first] += x.second * num;
+				
+				i = temp - 1;
+			}
+
+			else if(formula[i] >= 'A' && formula[i] <= 'Z'){
+				int idx = i+1;
+				while(idx < formula.size() && formula[idx] >= 'a' && formula[idx] <= 'z') idx++;
+				
+
+				string str = formula.substr(i,idx-1-i+1);
+				int num;
+				int temp2 = idx;
+
+				while(idx < formula.size() && isdigit(formula[idx])) idx++;
+				
+				if(idx == temp2) num=1;
+				
+				else{
+					string num2 = formula.substr(temp2,idx-1-temp2+1);
+					num = stoi(num2);
+				}
+
+				cur[str] += num;
+				i = idx - 1;
+			}
+		}
+
+		string ans = "";
+		for(auto& x : cur){
+			ans += x.first;
+			if(x.second > 1) ans += to_string(x.second);
+		}
+		return ans;
+	}
+};
