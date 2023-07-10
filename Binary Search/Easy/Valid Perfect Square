@@ -1,0 +1,38 @@
+https://leetcode.com/problems/valid-perfect-square/
+
+APPROACH 1 : LINEAR SEARCH
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(1)
+* GIVES TLE *
+
+class Solution {
+public:
+    bool isPerfectSquare(int num) {
+        for(int i=1; i*i <= num; i++){
+            if(num == i*i) return true;
+        }
+        return false;
+    }
+};
+
+APPROACH 2 : BINARY SEARCH
+TIME COMPLEXITY = O(LogN)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    bool isPerfectSquare(int num) {
+        int st = 0;
+        int end = num;
+
+        while(st <= end){
+            long long int mid = st + (end - st) / 2;
+            long long int sq = mid * mid;
+
+            if(sq == num) return true;
+            else if(sq < num) st = mid + 1;
+            else end = mid - 1;
+        }
+        return false;
+    }
+};
