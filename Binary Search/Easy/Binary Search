@@ -1,0 +1,37 @@
+https://leetcode.com/problems/binary-search/
+
+APPROACH 1 : LINEAR SEARCH
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        int n = nums.size();
+
+        for(int i=0; i<n; i++){
+            if(nums[i] == target) return i;
+        }
+        return -1;
+    }
+};
+
+APPROACH 2 : BINARY SEARCH
+TIME COMPLEXITY = O(LogN)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        int st = 0;
+        int end = nums.size()-1;
+
+        while(st <= end){
+            int mid = (st + end) / 2;
+            if(nums[mid] == target) return mid;
+            else if(nums[mid] < target) st = mid + 1;
+            else end = mid - 1;
+        }
+        return -1;
+    }
+};
