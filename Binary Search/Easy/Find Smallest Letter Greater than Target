@@ -1,0 +1,37 @@
+https://leetcode.com/problems/find-smallest-letter-greater-than-target/
+
+APPROACH : LINEAR SEARCH
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    char nextGreatestLetter(vector<char>& letters, char target) {
+        int st = 0;
+        int end = letters.size() - 1;
+
+        while(st <= end){
+            int mid = (st + end) / 2;
+
+            if(letters[mid] <= target) st = mid + 1;
+            else end = mid - 1;
+        }
+
+        if(st == letters.size()) return letters[0];
+        else return letters[st];
+    }
+};
+
+APPROACJ 2 : BINARY SEARCH
+TIME COMPLEXITY = O(LogN)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    char nextGreatestLetter(vector<char>& letters, char target) {
+        for(int i=0; i<letters.size(); i++){
+            if(letters[i] > target) return letters[i];
+        }
+        return letters[0];
+    }
+};
