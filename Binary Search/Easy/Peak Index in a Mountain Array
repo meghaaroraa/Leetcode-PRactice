@@ -1,0 +1,57 @@
+https://leetcode.com/problems/peak-index-in-a-mountain-array/
+
+APPROACH 1 : LINEAR SCAN
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    int peakIndexInMountainArray(vector<int>& arr) {
+        int n = arr.size();
+        for(int i=0; i<n-1; i++){
+            if(arr[i] > arr[i+1]) return i;
+        }
+        return n-1;
+    }
+};
+
+APPROACH 2 : BINARY SEARCH
+TIME COMPLEXITY = O(LogN)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    int peakIndexInMountainArray(vector<int>& arr) {
+        int st = 0;
+        int end = arr.size() - 1;
+
+        while(st < end){
+            int mid = (st + end) / 2;
+            if(arr[mid] < arr[mid+1]) st = mid+1;
+            else end = mid;
+        }
+        return st;
+    }
+};
+
+APPROACH 3 : BINARY SEARCH
+TIME COMPLEXITY = O(LogN)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    int peakIndexInMountainArray(vector<int>& arr) {
+        int st = 0;
+        int ans = 0;
+        int end = arr.size() - 1;
+
+        while(st <= end){
+            int mid = st + (end - st)/2;
+
+            if(arr[mid-1] > arr[mid] && arr[mid] > arr[mid+1]) end = mid;
+            else if(arr[mid-1] < arr[mid] && arr[mid] < arr[mid+1]) st = mid+1;
+            else return mid;
+        }
+        return ans;
+    }
+};
