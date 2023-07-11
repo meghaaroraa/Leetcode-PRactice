@@ -1,0 +1,23 @@
+https://leetcode.com/problems/h-index-ii/
+
+APPROACH : BINARY SEARCH
+TIME COMPLEXITY = O(LogN)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    int hIndex(vector<int>& citations) {
+        int st = 0;
+        int end = citations.size() - 1;
+        int n = citations.size();
+
+        while(st <= end){
+            int mid = st + (end - st) / 2;
+
+            if(citations[mid] == n-mid) return citations[mid];
+            else if(citations[mid] > n-mid) end = mid-1;
+            else st = mid+1;
+        }
+        return n-st;
+    }
+};
