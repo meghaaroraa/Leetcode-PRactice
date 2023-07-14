@@ -1,0 +1,39 @@
+https://leetcode.com/problems/word-break-ii/
+
+APPROACH : BACKTRACKING
+TIME COMPLEXITY = O(2^N)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+    void helper(unordered_map<string,bool>& mp, string s, vector<string>& ans, string temp, string word, int idx){
+        if(idx == s.length()){
+            temp.pop_back();
+            ans.push_back(temp);
+            return;
+        }
+
+        for(int i=idx; i<s.length(); i++){
+            word.push_back(s[i]);
+            temp.push_back(s[i]);
+
+            if(mp.find(word) != mp.end()){
+                temp.push_back(' ');
+                helper(mp, s, ans, temp, "", i+1);
+                temp.pop_back();
+            }
+        }
+    }
+
+    vector<string> wordBreak(string s, vector<string>& wordDict) {
+        unordered_map<string,bool> mp;
+        vector<string> ans;
+        string temp;
+        int idx = 0;
+
+        for(auto i : wordDict) mp[i] = true;
+        
+        helper(mp, s, ans, temp, "", idx);
+        return ans;
+    }
+};
