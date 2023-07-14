@@ -1,0 +1,66 @@
+https://leetcode.com/problems/permutation-sequence/
+
+APPROACH 1 : PERMUTATION
+TIME COMPLEXITY = O((n!) * log(n!))
+SPACE COMPLEXITY = O(N)
+* GIVES TLE * 
+
+class Solution {
+public:
+    void helper(string& nums, vector<string>& ans, int i, int n){
+        if(i == n){
+            ans.push_back(nums);
+            return;
+        }
+
+        for(int j=i; j<n; j++){
+            swap(nums[i],nums[j]);
+            helper(nums, ans, i+1, n);
+            swap(nums[i],nums[j]);
+        }
+    }
+
+    string getPermutation(int n, int k) {
+        string nums = "";
+        for(int i=0; i<n; i++) nums += to_string(i+1);
+
+        vector<string> ans;
+        helper(nums, ans, 0, n);
+
+        sort(ans.begin(),ans.end());
+
+        return ans[k-1];
+    }
+};
+
+APPROACH 2 : FACTORIAL 
+TIME COMPLEXITY = O(N^2)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+    string getPermutation(int n, int k) {
+        string ans = "";
+        vector<int> nums;
+
+        int fact = 1;
+        for(int i=1; i<=n; i++){
+            fact *= i;
+            nums.push_back(i);
+        }
+
+        int blockSize = fact / n;
+        k -= 1;
+
+        while(true){
+            ans += to_string(nums[k / blockSize]);
+            nums.erase(nums.begin() + k / blockSize);
+
+            if(nums.size() == 0) break;
+
+            k %= blockSize;
+            blockSize /= nums.size();
+        }
+        return ans;
+    }
+};
