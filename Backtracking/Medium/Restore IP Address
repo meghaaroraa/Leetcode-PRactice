@@ -1,0 +1,50 @@
+https://leetcode.com/problems/restore-ip-addresses/
+
+APPROACH : BACKTRACKING
+TIME COMPLEXITY = O(M^N * N)
+SPACE COMPLEXITY = O(M*N)
+
+class Solution {
+public:
+    bool isValid(string& s, int st, int len){
+        return len == 1 || (s[st] != '0' && (len < 3 || s.substr(st, len) <= "255"));
+    }
+
+    void helper(string& s, int startIdx, vector<int>& dots, vector<string>& ans){
+        int remLength = s.length() - startIdx;
+        int remInt = 4 - dots.size();
+
+        if(remLength > remInt * 3 || remLength < remInt) return;
+        
+        if(dots.size() == 3){
+            if(isValid(s, startIdx, remLength)){
+                string temp = "";
+                int last = 0;
+
+                for(int dot : dots){
+                    temp.append(s.substr(last, dot));
+                    last += dot;
+                    temp.append(".");
+                }
+
+                temp.append(s.substr(startIdx));
+                ans.push_back(temp);
+            }
+            return;
+        }
+
+        for(int curr=1; curr<=3 && curr <= remLength; curr++){
+            dots.push_back(curr);
+            if(isValid(s, startIdx, curr)) helper(s, startIdx+curr, dots, ans);
+            dots.pop_back();
+        }
+    }
+
+    vector<string> restoreIpAddresses(string s) {
+        vector<int> dots;
+        vector<string> ans;
+
+        helper(s, 0, dots, ans);
+        return ans;
+    }
+};
