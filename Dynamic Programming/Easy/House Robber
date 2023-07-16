@@ -1,0 +1,50 @@
+https://leetcode.com/problems/house-robber/
+
+APPROACH 1 : ITERATIVE DP
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> dp(n+1);
+        dp[0] = nums[0];
+
+        for(int i=1; i<n; i++){
+            int pick = nums[i];
+            if(i>1) pick += dp[i-2];
+
+            int notPick = dp[i-1];
+            dp[i] = max(pick, notPick);
+        }
+        return dp[n-1];
+    }
+};
+
+APPROACH 2 : RECURSIVE DP
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+    int helper(int i, int n, vector<int>& nums, vector<int>& dp){
+        if(i==0) return nums[0];
+
+        if(dp[i] != -1) return dp[i];
+
+        int pick = nums[i];
+
+        if(i > 1) pick += helper(i-2, n, nums, dp);
+
+        int notPick = helper(i-1, n, nums, dp);
+
+        return dp[i] = max(pick, notPick);
+    }
+
+    int rob(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> dp(n,-1);
+        return helper(n-1, n, nums, dp);
+    }
+};
