@@ -1,0 +1,36 @@
+https://leetcode.com/problems/maximal-square/
+
+APPROACH : 2D DP
+TIME COMPLEXITY = O(N^2)
+SPACE COMPLEXITY = O(N^2)
+
+class Solution {
+public:
+    int res = 0;
+    int helper(vector<vector<char>>& matrix, vector<vector<int>>& dp, int i, int j){
+        if(i >= matrix.size() || j >= matrix[0].size()) return 0;
+        if(dp[i][j] != -1) return dp[i][j];
+
+        int right = helper(matrix, dp, i, j+1);
+        int dia = helper(matrix, dp, i+1, j+1);
+        int down = helper(matrix, dp, i+1, j);
+        int ans = 0;
+
+        if(matrix[i][j] == '1'){
+            ans = min(right, min(dia, down)) + 1;
+            res = max(res, ans);
+            return dp[i][j] = ans;
+        }
+
+        else return dp[i][j] = 0;
+    }
+
+    int maximalSquare(vector<vector<char>>& matrix) {
+        int n = matrix.size();
+        int m = matrix[0].size();
+        vector<vector<int>> dp(n, vector<int> (m,-1));
+
+        int ans = helper(matrix, dp, 0, 0);
+        return res * res;
+    }
+};
