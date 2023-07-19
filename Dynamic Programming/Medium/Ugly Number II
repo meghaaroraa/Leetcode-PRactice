@@ -1,0 +1,58 @@
+https://leetcode.com/problems/ugly-number-ii/
+
+APPROACH : BRUTE FORCE
+TIME COMPLEXITY = O(N^2)
+SPACE COMPLEXITY = O(1)
+* GIVES TLE *
+
+class Solution {
+public:
+    bool isUgly(int n){
+        if(n == 0) return false;
+        while(n%2 == 0) n /= 2;
+        while(n%3 == 0) n /= 3;
+        while(n%5 == 0) n /= 5;
+    
+        return n == 1;
+    }
+
+    int nthUglyNumber(int n) {
+        int cnt = 0;
+        int num = 0;
+
+        while(cnt < n){
+            if(isUgly(num)) cnt++;
+            num++;
+        }
+        return --num;
+    }
+};
+
+APPROACH : DYNAMIC PROGRAMMING
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+    int nthUglyNumber(int n) {
+        vector<int> dp(n);
+        dp[0] = 1;
+
+        int p1 = 0;
+        int p2 = 0;
+        int p3 = 0;
+
+        for(int i=1; i<n; i++){
+            int two = dp[p1] * 2;
+            int three = dp[p2] * 3;
+            int five = dp[p3] * 5;
+
+            dp[i] = min(two, min(three, five));
+
+            if(dp[i] == two) p1++;
+            if(dp[i] == three) p2++;
+            if(dp[i] == five) p3++;
+        }
+        return dp[n-1];
+    }
+};
