@@ -1,0 +1,27 @@
+https://leetcode.com/problems/target-sum/
+
+APPROACH: RECURSION
+TIME COMPLEXITY = O(2^N)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+    int cnt = 0;
+
+    void helper(vector<int>& nums, int i, int sum, int target){
+        if(i == nums.size()){
+            if(sum == target) cnt++;
+            else return;
+        }
+            
+        else{
+            helper(nums, i+1, sum + nums[i], target);
+            helper(nums, i+1, sum - nums[i], target);
+        }
+    }
+
+    int findTargetSumWays(vector<int>& nums, int target) {
+        helper(nums, 0, 0, target);
+        return cnt;
+    }
+};
