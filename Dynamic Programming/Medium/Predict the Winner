@@ -1,0 +1,48 @@
+https://leetcode.com/problems/predict-the-winner/
+
+APPROACH 1: RECURSION
+TIME COMPLEXITY = O(2^N)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    int helper(int i, int j, vector<int>& nums){
+        if(i == j) return nums[i];
+
+        int left = nums[i] - helper(i+1,j,nums);
+        int right = nums[j] - helper(i,j-1,nums);
+
+        return max(left, right);
+    }
+
+    bool PredictTheWinner(vector<int>& nums) {
+        int n = nums.size();
+        int score = helper(0, n-1, nums);
+        return score >= 0;
+    }
+};
+
+APPROACH 2: DYNAMIC PROGRAMMING
+TIME COMPLEXITY = O(2^N)
+SPACE COMPLEXITY = O(N^2)
+
+class Solution {
+public:
+    int helper(int i, int j, vector<int>& nums, vector<vector<int>>& dp){
+        if(i == j) return nums[i];
+        if(dp[i][j] != -1) return dp[i][j];
+
+        int left = nums[i] - helper(i+1,j,nums,dp);
+        int right = nums[j] - helper(i,j-1,nums,dp);
+
+        return dp[i][j] = max(left, right);
+    }
+
+    bool PredictTheWinner(vector<int>& nums) {
+        int n = nums.size();
+        vector<vector<int>> dp(n, vector<int> (n,-1));
+
+        int score = helper(0, n-1, nums, dp);
+        return score >= 0;
+    }
+};
