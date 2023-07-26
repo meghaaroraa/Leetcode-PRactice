@@ -1,0 +1,33 @@
+https://leetcode.com/problems/minimum-cost-for-tickets/
+
+APPROACH: DYNAMIC PROGRAMMING
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+    int helper(vector<int>& days, vector<int>& costs, vector<int>& dp, unordered_set<int>& set, int currDay){
+        if(currDay > days[days.size()-1]) return 0;
+
+        if(set.find(currDay) == set.end()) return helper(days, costs, dp, set, currDay+1);
+
+        if(dp[currDay] != -1) return dp[currDay];
+
+        int one = costs[0] + helper(days, costs, dp, set, currDay+1);
+        int seven = costs[1] + helper(days, costs, dp, set, currDay+7);
+        int thirty = costs[2] + helper(days, costs, dp, set, currDay+30);
+
+        return dp[currDay] = min(one, min(seven, thirty));
+    }
+
+    int mincostTickets(vector<int>& days, vector<int>& costs) {
+        int n = days.size();
+        int lastDay = days[n-1];
+        vector<int> dp(lastDay+1, -1);
+
+        unordered_set<int> set;
+        for(int i=0; i<n; i++) set.insert(days[i]);
+
+        return helper(days, costs, dp, set, 1);
+    }
+};
