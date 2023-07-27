@@ -1,0 +1,54 @@
+https://leetcode.com/problems/merge-k-sorted-lists/
+
+APPROACH: MERGE 2 LISTS
+TIME COMPLEXITY = O(N^2)
+SPACE COMPLEXITY = O(1)
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* merge(ListNode *a, ListNode *b) {
+        if(!a) return b;
+        if(!b) return a;
+        
+        ListNode *dummy, *res;
+        dummy = res = new ListNode(-1);
+
+        while(a && b) {
+            if(a->val <= b->val) {
+                dummy->next = a;
+                a = a->next;
+            } 
+            
+            else {
+                dummy->next = b;
+                b = b->next;
+            }
+
+            dummy = dummy->next;
+            dummy->next = NULL;
+        }
+
+        if(a) dummy->next = a;
+        if(b) dummy->next = b;
+        
+        return res->next;
+    }
+    
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        ListNode *head = NULL;
+        for(ListNode *i : lists) {
+            head = merge(head, i);
+        }
+        return head;
+    }
+};
