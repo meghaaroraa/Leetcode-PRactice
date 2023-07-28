@@ -1,0 +1,59 @@
+https://leetcode.com/problems/evaluate-reverse-polish-notation/
+
+APPROACH: STRING EVALUATION
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+    int evalRPN(vector<string>& tokens) {
+        stack<int> st;
+        int n = tokens.size();
+
+        for(int i=0; i<n; i++){
+            string op = tokens[i];
+            if(op == "+"){
+                int num1 = st.top();
+                st.pop();
+
+                int num2 = st.top();
+                st.pop();
+
+                st.push(num2 + num1);
+            }
+
+            else if(op == "-"){
+                int num1 = st.top();
+                st.pop();
+
+                int num2 = st.top();
+                st.pop();
+
+                st.push(num2 - num1);
+            }
+
+            else if(op == "*"){
+                int num1 = st.top();
+                st.pop();
+
+                int num2 = st.top();
+                st.pop();
+
+                st.push(num2 * num1);
+            }
+
+            else if(op == "/"){
+                int num1 = st.top();
+                st.pop();
+
+                int num2 = st.top();
+                st.pop();
+
+                st.push(num2 / num1);
+            }
+
+            else st.push(stoi(op));
+        }
+        return st.top();
+    }
+};
