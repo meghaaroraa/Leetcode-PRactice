@@ -1,0 +1,54 @@
+https://leetcode.com/problems/decode-string/
+
+APPROACH: STACK
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+    string decodeString(string s) {
+        stack<string> st;
+        int n = s.length();
+        string ans = "";
+
+        for(int i=n-1; i>=0; i--){
+            if(st.empty() || s[i] == '[' || s[i] == ']' || (s[i] >= 'a' && s[i] <= 'z')){
+                string x = "";
+                x += s[i];
+                st.push(x);
+            }
+
+            else{
+                int num = 0;
+                int p = 0;
+
+                while(i>=0 && isdigit(s[i])){
+                    num += int(s[i] - '0') * pow(10,p);
+                    i--;
+                    p++;
+                }
+
+                i++;
+                st.pop();
+                string temp = "";
+
+                while(st.top() != "]"){
+                    temp += st.top();
+                    st.pop();
+                }
+
+                st.pop();
+                string insert = "";
+
+                while(num--) insert += temp;
+                st.push(insert);
+            }
+        }
+
+        while(!st.empty()){
+            ans += st.top();
+            st.pop();
+        }
+        return ans;
+    }
+};
