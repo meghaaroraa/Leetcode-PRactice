@@ -1,0 +1,29 @@
+https://leetcode.com/problems/score-of-parentheses/
+
+APPROACH: STACK
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+    int scoreOfParentheses(string s) {
+        stack<int> st;
+        st.push(0);
+        int n = s.length();
+
+        for(int i=0; i<n; i++){
+            char ch = s[i];
+            if(ch == '(') st.push(0);
+
+            else{
+                int top1 = st.top();
+                st.pop();
+
+                int top2 = st.top();
+                st.pop();
+                st.push(top2 + max(2*top1,1));
+            }
+        }
+        return st.top();
+    }
+};
