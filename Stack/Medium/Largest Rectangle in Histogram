@@ -1,0 +1,37 @@
+https://leetcode.com/problems/largest-rectangle-in-histogram/
+
+APPROACH: STACK
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        int max_area = 0;
+        vector<pair<int, int>> s;
+
+        for(int i=0; i<heights.size(); i++){
+            pair<int,int> curr_pair {heights[i], 1};
+            int num_popped = 0;
+
+            while(!s.empty() && s.back().first > curr_pair.first){
+                auto curr = s.back();
+                s.pop_back();
+                num_popped += curr.second;
+                max_area = max(max_area, curr.first * num_popped);
+            }
+
+            curr_pair.second += num_popped;
+            s.push_back(curr_pair);
+        }
+
+        int len = 0;
+        while(!s.empty()){
+            auto curr = s.back();
+            s.pop_back();
+            len += curr.second;
+            max_area = max(max_area, curr.first * len);
+        }
+        return max_area;
+    }
+};
