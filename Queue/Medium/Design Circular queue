@@ -1,0 +1,68 @@
+https://leetcode.com/problems/design-circular-queue/
+
+APPROACH: ARRAY
+TIME COMPLEXITY = O(1)
+SPACE COMPLEXITY = O(N)
+
+class MyCircularQueue {
+public:
+    int* arr;
+    int n;
+    int left;
+    int right;
+
+    MyCircularQueue(int k) {
+        n = k;
+        arr = new int[k];
+        left = right = -1; 
+    }
+    
+    bool enQueue(int value) {
+        if(isFull()) return false;
+        else if(isEmpty()) left = right = 0;
+        else if(right == n-1) right = 0;
+        else right++;
+        arr[right] = value;
+        return true;
+    }
+    
+    bool deQueue() {
+        if(isEmpty()) return false;
+        arr[left] = -1;
+        if(left == right) left = right = -1;
+        else if(left == n-1) left = 0;
+        else left++;
+        return true;
+    }
+    
+    int Front() {
+        if(left == -1) return -1;
+        return arr[left];
+    }
+    
+    int Rear() {
+        if(right == -1) return -1;
+        return arr[right];
+    }
+    
+    bool isEmpty() {
+        if(left == -1) return true;
+        else return false;
+    }
+    
+    bool isFull() {
+        if((left == 0 && right == n-1) || (right == (left-1)%(n) && left != 0)) return true;
+        return false;  
+    }
+};
+
+/**
+ * Your MyCircularQueue object will be instantiated and called as such:
+ * MyCircularQueue* obj = new MyCircularQueue(k);
+ * bool param_1 = obj->enQueue(value);
+ * bool param_2 = obj->deQueue();
+ * int param_3 = obj->Front();
+ * int param_4 = obj->Rear();
+ * bool param_5 = obj->isEmpty();
+ * bool param_6 = obj->isFull();
+ */
