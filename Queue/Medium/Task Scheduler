@@ -1,0 +1,25 @@
+https://leetcode.com/problems/task-scheduler/
+
+APPROACH: FREQUENCY ARRAY
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    int leastInterval(vector<char>& tasks, int n) {
+        int sz = tasks.size();
+        if(n == 0) return sz;
+
+        vector<int> freq(26);
+        for(int i=0; i<sz; i++) freq[tasks[i] - 'A']++;
+
+        sort(freq.begin(), freq.end());
+        int max = freq[25] - 1;
+        int slots = max * n;
+
+        for(int i=0; i<25; i++) slots -= min(freq[i],max);
+        
+        if(slots > 0) return slots + sz;
+        else return sz;
+    }
+};
