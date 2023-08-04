@@ -1,0 +1,36 @@
+https://leetcode.com/problems/swap-nodes-in-pairs/
+
+APPROACH: CURR AND PREV POINTER
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(1)
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* swapPairs(ListNode* head) {
+        ListNode* curr = head;
+        ListNode* prev = head;
+
+        while(curr && curr->next){
+            ListNode* nxt = curr->next;
+            curr->next = curr->next->next;
+            nxt->next = curr;
+
+            if(prev == head) head = nxt;
+            else prev->next = nxt;
+
+            prev = curr;
+            curr = curr->next;
+        }
+        return head;
+    }
+};
