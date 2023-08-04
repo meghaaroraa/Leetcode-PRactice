@@ -1,0 +1,58 @@
+https://leetcode.com/problems/reorder-list/
+
+APPROACH:
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(1)
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    void reorderList(ListNode* head) {
+        if(!head->next || !head->next->next) return;
+
+        ListNode* curr = head;
+        int len = 0;
+
+        while(curr){
+            len++;
+            curr = curr->next;
+        }
+
+        curr = head;
+        len /= 2;
+
+        while(len--) curr = curr->next;
+
+        ListNode* list2 = curr->next;
+        ListNode* nxt;
+        curr->next = NULL;
+        curr = NULL;
+
+        if(list2->next){
+            while(list2){
+                nxt = list2->next;
+                list2->next = curr;
+                curr = list2;
+                list2 = nxt;
+            }
+            list2 = curr;
+        }
+
+        while(head && list2){
+            nxt = head->next;
+            head->next = list2;
+            list2 = list2->next;
+            head->next->next = nxt;
+            head = nxt;
+        }
+    }
+};
