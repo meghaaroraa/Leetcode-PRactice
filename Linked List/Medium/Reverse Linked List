@@ -1,0 +1,64 @@
+https://leetcode.com/problems/reverse-linked-list-ii/
+
+APPROACH: 
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(1)
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseBetween(ListNode* head, int left, int right) {
+        if(left == right) return head;
+
+        ListNode* leftPrev = NULL;
+        ListNode* temp = head;
+        int cnt = 1;
+
+        while(cnt != left){
+            cnt++;
+            leftPrev = temp;
+            temp = temp->next;
+        }
+
+        ListNode* leftHead = temp;
+
+        while(cnt != right){
+            cnt++;
+            temp = temp->next;
+        }
+
+        ListNode* rightHead = temp;
+        ListNode* rightNext = rightHead->next;
+        rightHead->next = NULL;
+
+        ListNode* prev = NULL;
+        ListNode* curr = leftHead;
+        ListNode* nxt = NULL;
+
+        while(curr){
+            nxt = curr->next;
+            curr->next = prev;
+
+            prev = curr;
+            curr = nxt;
+        }
+
+        if(leftHead == head){
+            leftHead->next = rightNext;
+            return rightHead;
+        }
+
+        leftPrev->next = prev;
+        leftHead->next = rightNext;
+        return head;
+    }
+};
