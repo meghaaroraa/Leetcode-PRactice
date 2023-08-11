@@ -1,0 +1,49 @@
+https://leetcode.com/problems/network-delay-time/
+
+APPROACH: BFS
+TIME COMPLEXITY = O(N*E)
+SPACE COMPLEXITY O (N*E)
+
+class Solution {
+public:
+    vector<pair<int,int>> adj[101];
+    void helper(vector<int>& signal, int k){
+        queue<int> q;
+        q.push(k);
+
+        signal[k] = 0;
+
+        while(!q.empty()){
+            int curr = q.front();
+            q.pop();
+
+            for(const pair<int, int>& edge : adj[curr]){
+                int time = edge.first;
+                int neighbor = edge.second;
+                int arrival = signal[curr] + time;
+
+                if(signal[neighbor] > arrival) {
+                    signal[neighbor] = arrival;
+                    q.push(neighbor);
+                }
+            }
+        }
+    }
+
+    int networkDelayTime(vector<vector<int>>& times, int n, int k) {
+        // vector<pair<int,int>> adj(n);
+
+        for(auto time : times){
+            adj[time[0]].push_back({time[2],time[1]});
+        }
+
+        vector<int> signal(n+1, INT_MAX);
+        helper(signal, k);
+
+        int ans = INT_MIN;
+        for(int i=1; i<=n; i++) ans = max(ans, signal[i]);
+        
+        if(ans == INT_MAX) return -1;
+        else return ans;
+    }
+};
