@@ -1,0 +1,36 @@
+https://leetcode.com/problems/reorganize-string/
+
+APPROACH: SIMILAR TO DISTANT BARCODES
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    string reorganizeString(string s) {
+        int n = s.length();
+        string ans = s;
+
+        unordered_map<char,int> mp;
+        priority_queue<pair<int,char>> pq;
+
+        for(auto i : s) mp[i]++;
+        for(auto i : mp) pq.push({i.second, i.first});
+
+        int i = 0;
+        if(pq.top().first > (n+1)/2) return "";
+
+        while(!pq.empty()){
+            char val = pq.top().second;
+            int freq = pq.top().first;
+            pq.pop();
+
+            while(i<n && freq){
+                ans[i] = val;
+                freq--;
+                i += 2;
+                if(i >= n) i = 1;
+            }
+        }
+        return ans;
+    }
+};
