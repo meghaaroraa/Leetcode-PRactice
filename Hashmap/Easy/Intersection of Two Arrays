@@ -1,0 +1,55 @@
+https://leetcode.com/problems/intersection-of-two-arrays/
+
+APPROACH 1: SORTING
+TIME COMPLEXITY = O(NLogN)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+    vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+        int n = nums1.size();
+        int m = nums2.size();
+
+        int i = 0;
+        int j = 0;
+
+        sort(nums1.begin(), nums1.end());
+        sort(nums2.begin(), nums2.end());
+
+        set<int> s;
+        vector<int> ans;
+
+        while(i<n && j<m){
+            if(nums1[i] == nums2[j]){
+                if(s.find(nums1[i]) == s.end()) {
+                    s.insert(nums1[i]);
+                    ans.push_back(nums1[i]);
+                }
+                i++;
+                j++;
+            }
+            else if(nums1[i] < nums2[j]) i++;
+            else j++;
+        }
+
+        return ans;
+    }
+};
+
+APPROACH 2: SET
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+    vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+        vector<int> ans;
+        unordered_set<int> set{nums1.begin(), nums1.end()};
+
+        for (const int num : nums2){
+            if (set.erase(num)) ans.push_back(num);
+        }
+
+        return ans;
+    }
+};
