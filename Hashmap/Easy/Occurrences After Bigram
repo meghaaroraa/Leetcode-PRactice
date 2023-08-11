@@ -1,0 +1,33 @@
+https://leetcode.com/problems/occurrences-after-bigram/
+
+APPROACH: EXTRA SPACE
+TIME COMPLEXITY: O(N)
+SPACE COMPLEXITY: O(N)
+
+class Solution {
+public:
+    vector<string> findOcurrences(string text, string first, string second) {
+        int n = text.length();
+        int i = 0;
+
+        vector<string> words;
+        vector<string> ans;
+        string temp = "";
+
+        while(i<n){
+            if(text[i] == ' '){
+                words.push_back(temp);
+                temp = "";
+            }
+
+            else temp += text[i];
+            i++;
+        }
+        words.push_back(temp);
+
+        for(int i=1; i<words.size()-1; i++){
+            if(words[i-1] == first && words[i] == second) ans.push_back(words[i+1]);
+        }
+        return ans;
+    }
+};
