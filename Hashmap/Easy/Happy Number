@@ -1,0 +1,26 @@
+https://leetcode.com/problems/happy-number/
+
+APPROACH: MAP
+TIME COMPLEXITY = O(LogN)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    bool isHappy(int n) {
+        int sum = 0;
+        map<int, bool> mp;
+
+        while(n){
+            sum = 0;
+            while(n){
+                sum += (n%10) * (n%10);
+                n /= 10;
+            }
+            if(sum == 1) return true;
+            if(mp.find(sum) != mp.end()) return false;
+            mp[sum] = false;
+            n = sum;
+        }
+        return false;
+    }
+};
