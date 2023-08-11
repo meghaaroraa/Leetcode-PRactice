@@ -1,0 +1,37 @@
+https://leetcode.com/problems/keyboard-row/
+
+APPROACH: MAP
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    vector<string> findWords(vector<string>& words) {
+        unordered_map<char, int> mp;
+        string row1 = "qwertyuiop";
+        string row2 = "asdfghjkl";
+        string row3 = "zxcvbnm";
+
+        for(char ch : row1) mp[ch] = 1;
+        for(char ch : row2) mp[ch] = 2;
+        for(char ch : row3) mp[ch] = 3;
+
+        vector<string> ans;
+        for(auto word : words){
+            char ch = tolower(word[0]);
+            int row = mp[ch];
+            bool flag = true;
+
+            for(auto c : word){
+                c = tolower(c);
+                if(mp[c] != row){
+                    flag = false;
+                    break;
+                }
+            }
+            if(flag) ans.push_back(word);
+        }
+        return ans;
+
+    }
+};
