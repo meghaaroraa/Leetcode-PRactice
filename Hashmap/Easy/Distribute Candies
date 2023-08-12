@@ -1,0 +1,19 @@
+https://leetcode.com/problems/distribute-candies/
+
+APPROACH: SET
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+    int distributeCandies(vector<int>& candyType) {
+        set<int> s;
+        for(auto candy : candyType) s.insert(candy);
+
+        int n = candyType.size() / 2;
+        int c = s.size();
+
+        if(n < c) return n;
+        else return c;
+    }
+};
