@@ -1,0 +1,32 @@
+https://leetcode.com/problems/minimum-index-sum-of-two-lists/
+
+APPROACH: MAP
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(N + M)
+
+class Solution {
+public:
+    vector<string> findRestaurant(vector<string>& list1, vector<string>& list2) {
+        unordered_map<string, int> mp;
+        int n = list1.size();
+
+        for(int i=0; i<n; i++) mp[list1[i]] = i;
+
+        int m = list2.size();
+        vector<string> ans;
+        int minSum = INT_MAX;
+
+        for(int i=0; i<m; i++){
+            if(mp.find(list2[i]) != mp.end()){
+                int sum = i + mp[list2[i]];
+                if(sum < minSum){
+                    ans.clear();
+                    ans.push_back(list2[i]);
+                    minSum = sum;
+                }
+                else if(sum == minSum) ans.push_back(list2[i]);
+            }
+        }
+        return ans;
+    }
+};
