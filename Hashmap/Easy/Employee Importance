@@ -1,0 +1,41 @@
+https://leetcode.com/problems/employee-importance/
+
+APPROACH:
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(N)
+
+/*
+// Definition for Employee.
+class Employee {
+public:
+    int id;
+    int importance;
+    vector<int> subordinates;
+};
+*/
+
+class Solution {
+public:
+    int getImportance(vector<Employee*> employees, int id) {
+        queue<int> q;
+        unordered_map<int, Employee*> mp;
+
+        for(auto i : employees) mp[i->id] = i;
+
+        q.push(id);
+        int imp = 0;
+
+        while(!q.empty()){
+            int id = q.front();
+            q.pop();
+            imp += mp[id]->importance;
+
+            vector<int> sub = mp[id]->subordinates;
+
+            if(sub.size() != 0){
+                for(auto s : sub) q.push(s);
+            }
+        }
+        return imp;
+    }
+};
