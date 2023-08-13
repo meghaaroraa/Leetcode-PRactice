@@ -1,0 +1,31 @@
+https://leetcode.com/problems/subdomain-visit-count/
+
+APPROACH: MAP
+TIME COMPLEXITY = O(N^2)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+    vector<string> subdomainVisits(vector<string>& cpdomains) {
+        unordered_map<string, int> mp;
+
+        for(string domain : cpdomains){
+            int val = stoi(domain);
+            int n = domain.length();
+            string temp = "";
+            
+            for(int i=n-1; i>=0; i--){
+                if(domain[i] == ' ') break;
+                if(domain[i] == '.') mp[temp] += val;
+                temp = domain[i] + temp;
+            }
+            mp[temp] += val;
+        }
+        vector<string> ans;
+        for(auto it : mp){
+            string temp = to_string(it.second) + " " + it.first;
+            ans.push_back(temp);
+        }
+        return ans;
+    }
+};
