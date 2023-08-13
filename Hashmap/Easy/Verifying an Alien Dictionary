@@ -1,0 +1,36 @@
+https://leetcode.com/problems/verifying-an-alien-dictionary/
+
+APPROACH:
+TIME COMPLEXITY = O(N^2)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    bool helper(string s1, string s2, vector<int>& order){
+        int n = s1.length();
+        int m = s2.length();
+
+        for(int i=0; i<n; i++){
+            if(i >= m) return false;
+            if(s1[i] != s2[i]){
+                int curr = s1[i] - 'a';
+                int next = s2[i] - 'a';
+
+                if(order[curr] > order[next]) return false;
+                else break;
+            }
+        }
+        return true;
+    }
+
+    bool isAlienSorted(vector<string>& words, string order) {
+        vector<int> orr(26, 0);
+        for(int i=0; i<26; i++) orr[order[i] - 'a'] = i;
+
+        int n = words.size();
+        for(int i=0; i<n-1; i++){
+            if(!helper(words[i], words[i+1], orr)) return false;
+        }
+        return true;
+    }
+};
