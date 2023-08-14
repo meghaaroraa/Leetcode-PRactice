@@ -1,0 +1,73 @@
+https://leetcode.com/problems/time-based-key-value-store/
+
+APPROACH: MAP + LINEAR SEARCH
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(N)
+* GIVES TLE *
+
+class TimeMap {
+public:
+    unordered_map<string, unordered_map<int, string>> mp;
+    TimeMap() {
+        
+    }
+    
+    void set(string key, string value, int timestamp) {
+        mp[key][timestamp] = value;
+    }
+    
+    string get(string key, int timestamp) {
+        if(mp.find(key) == mp.end()) return "";
+
+        for(int t=timestamp; t>=1; t--){
+            if(mp[key].find(t) != mp[key].end()) return mp[key][t];
+        }
+        return "";
+    }
+};
+
+/**
+ * Your TimeMap object will be instantiated and called as such:
+ * TimeMap* obj = new TimeMap();
+ * obj->set(key,value,timestamp);
+ * string param_2 = obj->get(key,timestamp);
+ */
+
+APPROACH 2: MAP + BINARY SEARCH
+TIME COMPLEXITY = O(LogN)
+SPACE COMPLEXITY = O(N)
+
+class TimeMap {
+public:
+    unordered_map<string, vector<pair<int,string>>> mp;
+    TimeMap() {
+        
+    }
+    
+    void set(string key, string value, int timestamp) {
+        mp[key].push_back({timestamp,value});
+    }
+    
+    string get(string key, int timestamp) {
+        if(mp.find(key) == mp.end()) return "";
+
+        int left = 0;
+        int right = mp[key].size();
+
+        while(left < right){
+            int mid = (left + right) / 2;
+            if(mp[key][mid].first <= timestamp) left = mid+1;
+            else right = mid;
+        }
+
+        if(right == 0) return "";
+        else return mp[key][right-1].second;
+    }
+};
+
+/**
+ * Your TimeMap object will be instantiated and called as such:
+ * TimeMap* obj = new TimeMap();
+ * obj->set(key,value,timestamp);
+ * string param_2 = obj->get(key,timestamp);
+ */
