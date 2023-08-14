@@ -1,0 +1,38 @@
+https://leetcode.com/problems/replace-words/
+
+APPROACH:
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+    string replaceWords(vector<string>& dictionary, string sentence) {
+        unordered_map<string, int> mp;
+
+        for(auto dict : dictionary) mp[dict] = dict.length();
+
+        istringstream iss1(sentence);
+        string word;
+
+        string ans = "";
+
+        while(iss1 >> word){
+            int n = word.length();
+            string temp = "";
+            bool flag = true;
+
+            for(int i=0; i<n; i++){
+                temp += word[i];
+
+                if(mp.find(temp) != mp.end()){
+                    ans = ans + temp + " ";
+                    flag = false;
+                    break;
+                }
+            }
+
+            if(flag) ans = ans + word + " ";
+        }
+        return ans.substr(0, ans.length()-1);
+    }
+};
