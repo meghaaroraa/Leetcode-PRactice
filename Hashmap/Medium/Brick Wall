@@ -1,0 +1,25 @@
+https://leetcode.com/problems/brick-wall/
+
+APPROACH: 
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+    int leastBricks(vector<vector<int>>& wall) {
+        unordered_map<int,int> mp;
+        int n = wall.size();
+
+        for(int i=0; i<n; i++){
+            int temp = 0;
+            for(int j=0; j<wall[i].size()-1; j++){
+                temp += wall[i][j];
+                mp[temp]++;
+            }
+        }
+
+        int maxBrick = 0;
+        for(auto i : mp) maxBrick = max(maxBrick, i.second);
+        return n-maxBrick;
+    }
+};
