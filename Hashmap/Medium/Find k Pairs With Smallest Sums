@@ -1,0 +1,30 @@
+https://leetcode.com/problems/find-k-pairs-with-smallest-sums/
+
+APPROACH:
+TIME COMPLEXITY = O(N^2)
+SPACE COMPLEXITY = O(K)
+
+class Solution {
+public:
+    vector<vector<int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k) {
+        priority_queue<pair<int,vector<int>>> pq;
+
+        for(int n1 : nums1){
+            for(int n2 : nums2){
+                if(pq.size() < k) pq.push({n1+n2, {n1,n2}});
+                else if(pq.top().first > n1+n2){
+                    pq.pop();
+                    pq.push({n1+n2, {n1,n2}});
+                }
+                else break;
+            }
+        }
+
+        vector<vector<int>> ans;
+        while(!pq.empty()){
+            ans.push_back(pq.top().second);
+            pq.pop();
+        }
+        return ans;
+    }
+};
