@@ -1,0 +1,47 @@
+https://leetcode.com/problems/binary-subarrays-with-sum/
+
+APPROACH 1: ALL SUBARRAYS
+TIME COMPLEXITY = O(N^2)
+SPACE COMPLEXITY = O(1)
+* GIVES TLE *
+
+class Solution {
+public:
+    int numSubarraysWithSum(vector<int>& nums, int goal) {
+        int cnt = 0;
+        int n = nums.size();
+
+        for(int i=0; i<n; i++){
+            int sum = 0;
+
+            for(int j=i; j<n; j++){
+                sum += nums[j];
+                if(sum == goal) cnt++;
+            }
+        }
+        return cnt;
+    }
+};
+
+APPROACH 2: MAP
+TIME COMPLEXITY = O(N)
+SPACE COMPLEXITY = O(N)
+
+class Solution {
+public:
+    int numSubarraysWithSum(vector<int>& nums, int goal) {
+        int n = nums.size();
+        vector<int> pre(n+1, 0);
+
+        for(int i=0; i<n; i++) pre[i+1] = pre[i] + nums[i];
+
+        unordered_map<int,int> mp;
+        int cnt = 0;
+
+        for(int num : pre){
+            if(mp.find(num) != mp.end()) cnt += mp[num];
+            mp[num + goal]++;
+        }
+        return cnt;
+    }
+};
