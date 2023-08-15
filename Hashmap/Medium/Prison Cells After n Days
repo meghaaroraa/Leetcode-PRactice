@@ -1,0 +1,25 @@
+https://leetcode.com/problems/prison-cells-after-n-days/
+
+APPROACH: VECTORS
+TIME COMPLEXITY = O(N * M)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    vector<int> prisonAfterNDays(vector<int>& cells, int n) {
+        vector<int> ans(8);
+        ans = cells;
+        n = (n-1)%14;
+
+        while(n >= 0){
+            for(int i=0; i<8; i++){
+                if(i == 0 || i == 7) ans[i] = 0;
+                else if((cells[i-1] == 0 && cells[i+1] == 0) || (cells[i-1] == 1 && cells[i+1] == 1)) ans[i] = 1;
+                else ans[i] = 0;
+            }
+            cells = ans;
+            n--;
+        }
+        return ans;
+    }
+};
