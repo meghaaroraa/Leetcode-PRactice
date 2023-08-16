@@ -1,0 +1,28 @@
+https://leetcode.com/problems/convert-a-number-to-hexadecimal/
+
+APPROACH: WHILE LOOP
+TIME COMPLEXITY = O(Log (16) N)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    string toHex(int num) {
+        string ans = "";
+        if(num == 0) return "0";
+
+        u_int n = num;
+
+        while(n > 0){
+            int rem = n % 16;
+            char ch;
+
+            if(rem < 10) ch = rem + 48;
+            else ch = rem + 87; // 55 for small alphabets
+
+            ans += ch;
+            n /= 16;
+        }
+        reverse(ans.begin(), ans.end());
+        return ans;
+    }
+};
