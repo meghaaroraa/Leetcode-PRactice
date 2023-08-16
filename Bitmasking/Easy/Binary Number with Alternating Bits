@@ -1,0 +1,20 @@
+https://leetcode.com/problems/binary-number-with-alternating-bits/
+
+APPROACH: WHILE LOOP
+TIME COMPLEXITY = O(LogN)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    bool hasAlternatingBits(int n) {
+        int temp = n%2;
+        n /= 2;
+
+        while(n > 0){
+            if(temp == n%2) return false;
+            temp = n%2;
+            n /= 2;
+        }
+        return true;
+    }
+};
