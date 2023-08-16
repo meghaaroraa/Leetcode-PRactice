@@ -1,0 +1,13 @@
+https://leetcode.com/problems/power-of-four/
+
+APPROACH: WHILE LOOP
+TIME COMPLEXITY = O(Log (4) N)
+SPACE COMPLEXITY = O(1)
+
+class Solution {
+public:
+    bool isPowerOfFour(int n) {
+        while(n%4 == 0 && n>0) n /= 4;
+        return n==1;
+    }
+};
